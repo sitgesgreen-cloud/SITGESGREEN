@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Tu opinión — Sitges Green</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Karla:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  body{background:var(--deep)}
+  .op-wrap{width:min(580px,92vw);margin:28px auto 40px;padding:32px 28px 36px;background:var(--paper);border-radius:28px;box-shadow:0 30px 60px -30px rgba(0,0,0,.6)}
+  .rate-label{font-weight:600;color:var(--green);min-height:1.6em;margin:6px 0 0}
+  .count{font-size:.9rem;color:var(--stone);text-align:right;margin-top:4px}
+  .field textarea{min-height:130px}
+  .op-brand{display:flex;align-items:center;gap:10px;font-weight:600;text-decoration:none;margin-bottom:34px}
+  .op-wrap h1{font-size:clamp(2rem,7vw,2.8rem);margin-bottom:12px}
+  .op-wrap .intro{color:var(--stone);margin:0 0 28px}
+  .stars{display:flex;flex-direction:row-reverse;justify-content:flex-end;gap:2px;border:0;padding:0;margin:0}
+  .stars input{position:absolute;opacity:0;pointer-events:none}
+  .stars label{font-size:3rem;line-height:1;cursor:pointer;color:var(--line);margin:0;padding:0 2px}
+  .stars input:checked~label,.stars label:hover,.stars label:hover~label{color:#E0A800}
+  .stars input:focus-visible+label{outline:2px solid var(--green);outline-offset:2px;border-radius:6px}
+  .hp{position:absolute;left:-9999px}
+  .op-wrap .btn{width:100%;margin-top:6px}
+  .op-wrap .btn[disabled]{opacity:.6;cursor:wait}
+  .op-note{font-size:.9rem;color:var(--stone);margin-top:14px}
+  .op-ok{display:none;text-align:left}
+  .op-ok h2{font-size:2rem;margin-bottom:12px}
+  .op-ok a{color:var(--green);font-weight:600}
+  .lang-switch{display:flex;gap:4px;margin-left:auto}
+  .lang-switch button{font-family:inherit;font-size:1rem;font-weight:600;cursor:pointer;background:transparent;border:1px solid var(--line);color:var(--stone);padding:5px 9px;border-radius:8px}
+  .lang-switch button.active{background:var(--deep);color:var(--on-deep);border-color:var(--deep)}
+</style>
+</head>
+<body>
+<div class="op-wrap">
+  <div class="op-brand">
+    <a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none">
+      <svg class="mark" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 22V9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M12 13c0-4 3-7 8-7 0 4-3.2 7-8 7Z" fill="#2F6B4A"/>
+        <path d="M12 18c0-3.2-2.6-5.6-6.5-5.6 0 3.3 2.7 5.6 6.5 5.6Z" fill="#9DB6A2"/>
+      </svg>Sitges Green</a>
+    <div class="lang-switch" role="group" aria-label="Idioma">
+      <button type="button" data-lang="es" class="active">ES</button>
+      <button type="button" data-lang="ca">CA</button>
+      <button type="button" data-lang="en">EN</button>
+    </div>
+  </div>
+
+  <div id="formbox">
+    <h1 data-i18n="h1">¿Qué tal fue el trabajo en tu jardín?</h1>
+    <p class="intro" data-i18n="intro">Tu opinión ayuda a otros vecinos a decidirse. Son solo 30 segundos.</p>
+
+    <form id="op-form">
+      <input type="hidden" name="idioma" id="idioma" value="es">
+      <p class="hp"><label>No rellenar <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+
+      <div class="field">
+        <label data-i18n="l.puntos" id="lp">Puntuación</label>
+        <fieldset class="stars" aria-labelledby="lp">
+          <input type="radio" id="s5" name="puntuacion" value="5" checked><label for="s5" title="5">★</label>
+          <input type="radio" id="s4" name="puntuacion" value="4"><label for="s4" title="4">★</label>
+          <input type="radio" id="s3" name="puntuacion" value="3"><label for="s3" title="3">★</label>
+          <input type="radio" id="s2" name="puntuacion" value="2"><label for="s2" title="2">★</label>
+          <input type="radio" id="s1" name="puntuacion" value="1"><label for="s1" title="1">★</label>
+        </fieldset>
+        <p class="rate-label" id="rl" aria-live="polite"></p>
+      </div>
+      <div class="field">
+        <label for="nombre" data-i18n="l.nombre">Tu nombre</label>
+        <input id="nombre" name="nombre" type="text" required maxlength="60" autocomplete="name" data-i18n-ph="ph.nombre" placeholder="Nombre y inicial del apellido">
+      </div>
+      <div class="field">
+        <label for="poblacion" data-i18n="l.poblacion">Población</label>
+        <input id="poblacion" name="poblacion" type="text" required maxlength="60" data-i18n-ph="ph.poblacion" placeholder="Ej.: Sitges">
+      </div>
+      <div class="field">
+        <label for="comentario" data-i18n="l.comentario">Tu comentario</label>
+        <textarea id="comentario" name="comentario" required minlength="10" maxlength="500" data-i18n-ph="ph.comentario" placeholder="Qué hicimos y qué te pareció"></textarea>
+        <div class="count"><span id="cn">0</span>/500</div>
+      </div>
+      <button class="btn btn-primary" type="submit" id="send" data-i18n="btn">Enviar opinión</button>
+      <p class="op-note" data-i18n="nota">Revisamos cada opinión antes de publicarla en la web.</p>
+      <p class="status" id="err" role="status" style="color:#9A2B1F"></p>
+    </form>
+  </div>
+
+  <div class="op-ok" id="ok">
+    <h2 data-i18n="ok.h">¡Gracias!</h2>
+    <p data-i18n="ok.p">Hemos recibido tu opinión. La publicaremos en la web en cuanto la revisemos.</p>
+    <p><a href="index.html" data-i18n="ok.a">Volver a la web</a></p>
+  </div>
+</div>
+
+<script src="supabase-config.js"></script>
+<script>
+var T={
+ es:{h1:"¿Qué tal fue el trabajo en tu jardín?",intro:"Tu opinión ayuda a otros vecinos a decidirse. Son solo 30 segundos.","l.puntos":"Puntuación","l.nombre":"Tu nombre","l.poblacion":"Población","l.comentario":"Tu comentario","ph.nombre":"Nombre y inicial del apellido","ph.poblacion":"Ej.: Sitges","ph.comentario":"Qué hicimos y qué te pareció",btn:"Enviar opinión",nota:"Revisamos cada opinión antes de publicarla en la web.","ok.h":"¡Gracias!","ok.p":"Hemos recibido tu opinión. La publicaremos en la web en cuanto la revisemos.","ok.a":"Volver a la web",rate:["","Mal","Mejorable","Bien","Muy bien","¡Excelente!"],err:"No se pudo enviar. Revisa tu conexión e inténtalo otra vez."},
+ ca:{h1:"Què tal va ser la feina al teu jardí?",intro:"La teva opinió ajuda altres veïns a decidir-se. Són només 30 segons.","l.puntos":"Puntuació","l.nombre":"El teu nom","l.poblacion":"Població","l.comentario":"El teu comentari","ph.nombre":"Nom i inicial del cognom","ph.poblacion":"Ex.: Sitges","ph.comentario":"Què vam fer i què et va semblar",btn:"Enviar opinió",nota:"Revisem cada opinió abans de publicar-la a la web.","ok.h":"Gràcies!","ok.p":"Hem rebut la teva opinió. La publicarem a la web tan bon punt la revisem.","ok.a":"Tornar a la web",rate:["","Malament","Millorable","Bé","Molt bé","Excel·lent!"],err:"No s'ha pogut enviar. Revisa la connexió i torna-ho a provar."},
+ en:{h1:"How did the work on your garden go?",intro:"Your review helps other neighbours decide. It takes 30 seconds.","l.puntos":"Rating","l.nombre":"Your name","l.poblacion":"Town","l.comentario":"Your comment","ph.nombre":"First name and surname initial","ph.poblacion":"E.g. Sitges","ph.comentario":"What we did and what you thought",btn:"Send review",nota:"We check every review before publishing it on the site.","ok.h":"Thank you!","ok.p":"We've received your review. We'll publish it on the site once we've checked it.","ok.a":"Back to the site",rate:["","Poor","Could be better","Good","Very good","Excellent!"],err:"Couldn't send. Check your connection and try again."}
+};
+var lang="es";
+function apply(l){
+  lang=T[l]?l:"es";var d=T[lang];document.documentElement.lang=lang;
+  document.querySelectorAll("[data-i18n]").forEach(function(e){var k=e.getAttribute("data-i18n");if(d[k])e.textContent=d[k]});
+  document.querySelectorAll("[data-i18n-ph]").forEach(function(e){e.placeholder=d[e.getAttribute("data-i18n-ph")]});
+  document.querySelectorAll(".lang-switch button").forEach(function(b){b.classList.toggle("active",b.dataset.lang===lang)});
+  document.getElementById("idioma").value=lang;
+  try{localStorage.setItem("sg_lang",lang)}catch(e){}
+  showRate();
+}
+function showRate(){var c=document.querySelector('input[name=puntuacion]:checked');document.getElementById('rl').textContent=c?T[lang].rate[c.value]:'';}
+document.querySelectorAll('input[name=puntuacion]').forEach(function(i){i.addEventListener('change',showRate)});
+document.getElementById('comentario').addEventListener('input',function(){document.getElementById('cn').textContent=this.value.length});
+document.querySelectorAll(".lang-switch button").forEach(function(b){b.addEventListener("click",function(){apply(b.dataset.lang)})});
+var s="";try{s=localStorage.getItem("sg_lang")||""}catch(e){}
+if(!s){var n=(navigator.language||"es").slice(0,2);s=T[n]?n:"es"}
+apply(s);
+
+document.getElementById("op-form").addEventListener("submit",function(ev){
+  ev.preventDefault();
+  var f=ev.target,btn=document.getElementById("send"),err=document.getElementById("err");
+  err.textContent="";
+  function done(){document.getElementById("formbox").style.display="none";document.getElementById("ok").style.display="block";window.scrollTo(0,0)}
+  if(f.elements["bot-field"].value){done();return}   /* robot: fingimos que ha ido bien */
+  if(!window.SUPABASE_URL||window.SUPABASE_URL.indexOf("TU-PROYECTO")>-1){err.textContent=T[lang].err;return}
+  btn.disabled=true;
+  var data={
+    nombre:f.elements["nombre"].value.trim(),
+    poblacion:f.elements["poblacion"].value.trim(),
+    estrellas:parseInt(f.elements["puntuacion"].value,10),
+    texto:f.elements["comentario"].value.trim(),
+    idioma:lang
+  };
+  fetch(window.SUPABASE_URL+"/rest/v1/opiniones",{
+    method:"POST",
+    headers:{"apikey":window.SUPABASE_KEY,"Content-Type":"application/json","Prefer":"return=minimal"},
+    body:JSON.stringify(data)
+  }).then(function(r){if(!r.ok)throw new Error();done()})
+    .catch(function(){err.textContent=T[lang].err;btn.disabled=false});
+});
+</script>
+</body>
+</html>
